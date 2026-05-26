@@ -1,0 +1,183 @@
+/* ============================================================
+   Kept Organised Design System
+   CSS Custom Properties — v1.0 | May 2026
+   
+   Single source of truth for all design tokens.
+   Import this file before any component CSS.
+   
+   Platforms:
+   - GoHighLevel: paste into Custom CSS or link via <link> tag
+   - Lovable/React: import in index.css or App.css
+   ============================================================ */
+
+:root {
+
+  /* ── COLOUR: Brand layer ─────────────────────────────────
+     Raw palette values. Use semantic tokens in components.
+     These exist as a reference — never reference them directly.
+     ───────────────────────────────────────────────────────── */
+  --color-brand-crimson: #C21F42;
+  --color-brand-deep:    #8A1630;
+  --color-brand-tint:    #F5E6EA;
+  --color-brand-ink:     #1E1A18;
+  --color-brand-body:    #5C5450;
+  --color-brand-ground:  #FAF8F5;
+
+  /* ── COLOUR: Background ──────────────────────────────────── */
+  --color-bg-default:   #FAF8F5;   /* Ground — main page background */
+  --color-bg-subtle:    #F5E6EA;   /* Tint — section and card backgrounds */
+  --color-bg-inverse:   #1E1A18;   /* Ink — dark section backgrounds */
+  --color-bg-brand:     #C21F42;   /* Crimson — brand-fill backgrounds */
+
+  /* ── COLOUR: Text ────────────────────────────────────────── */
+  --color-text-default: #1E1A18;   /* Ink — primary text */
+  --color-text-muted:   #5C5450;   /* Body — secondary, captions, helpers */
+  --color-text-inverse: #FAF8F5;   /* Ground — text on dark backgrounds */
+  --color-text-brand:   #C21F42;   /* Crimson — brand emphasis, links */
+  --color-text-subtle:  #8A1630;   /* Deep — secondary brand text */
+
+  /* ── COLOUR: Action ──────────────────────────────────────── */
+  --color-action-primary:             #C21F42;   /* Primary button fill */
+  --color-action-primary-hover:       #8A1630;   /* Primary button hover */
+  --color-action-primary-text:        #FAF8F5;   /* Primary button label */
+  --color-action-secondary-border:    #1E1A18;   /* Secondary button border */
+  --color-action-secondary-text:      #1E1A18;   /* Secondary button label */
+  --color-action-secondary-hover-bg:  #1E1A18;   /* Secondary button hover fill */
+  --color-action-secondary-hover-text:#FAF8F5;   /* Secondary button hover label */
+  --color-action-ghost-text:          #C21F42;   /* Ghost button label */
+  --color-action-ghost-hover-bg:      #F5E6EA;   /* Ghost button hover fill */
+
+  /* ── COLOUR: Border ──────────────────────────────────────── */
+  --color-border-default: #1E1A18;   /* Ink — inputs, cards, nav */
+  --color-border-subtle:  #5C5450;   /* Body — secondary borders */
+  --color-border-faint:   #F5E6EA;   /* Tint — dividers, separator lines */
+  --color-border-brand:   #C21F42;   /* Crimson — focus, active, accent */
+
+  /* ── COLOUR: State ───────────────────────────────────────── */
+  --color-state-focus:   #C21F42;
+  --color-state-error:   #C21F42;
+  --color-state-success: #3D6B4F;   /* Outside brand palette */
+  --color-state-warning: #8A6030;   /* Outside brand palette */
+
+  /* ── TYPOGRAPHY: Families ────────────────────────────────── */
+  --font-heading: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'DM Mono', 'Courier New', monospace;
+
+  /* ── TYPOGRAPHY: Scale ───────────────────────────────────── */
+  --text-display: 4rem;        /* 64px — hero headlines */
+  --text-h1:      3rem;        /* 48px */
+  --text-h2:      2.25rem;     /* 36px */
+  --text-h3:      1.75rem;     /* 28px */
+  --text-h4:      1.375rem;    /* 22px */
+  --text-h5:      1.125rem;    /* 18px */
+  --text-lg:      1.125rem;    /* 18px — large body */
+  --text-base:    1rem;        /* 16px — default body */
+  --text-sm:      0.875rem;    /* 14px — small, captions */
+  --text-xs:      0.75rem;     /* 12px — labels, eyebrows, metadata */
+  --text-mono:    0.875rem;    /* 14px — mono default */
+
+  /* ── TYPOGRAPHY: Line heights ─────────────────────────────── */
+  --leading-tight:   1.1;    /* Display, H1 */
+  --leading-snug:    1.2;    /* H2, H3 */
+  --leading-normal:  1.5;    /* Body copy */
+  --leading-relaxed: 1.7;    /* Long-form reading, testimonials */
+
+  /* ── TYPOGRAPHY: Weights ─────────────────────────────────── */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ── TYPOGRAPHY: Letter spacing ──────────────────────────── */
+  --tracking-tight:  -0.02em;   /* Large headings */
+  --tracking-normal:  0em;
+  --tracking-wide:    0.05em;   /* Small caps, eyebrows */
+  --tracking-wider:   0.1em;    /* Uppercase labels */
+
+  /* ── SPACING: 8pt base ───────────────────────────────────── */
+  --space-0:  0;
+  --space-px: 1px;
+  --space-1:  0.25rem;    /*  4px — half unit */
+  --space-2:  0.5rem;     /*  8px — 1 unit */
+  --space-3:  0.75rem;    /* 12px — 1.5 units */
+  --space-4:  1rem;       /* 16px — 2 units */
+  --space-5:  1.25rem;    /* 20px */
+  --space-6:  1.5rem;     /* 24px — 3 units */
+  --space-8:  2rem;       /* 32px — 4 units */
+  --space-10: 2.5rem;     /* 40px */
+  --space-12: 3rem;       /* 48px — 6 units */
+  --space-16: 4rem;       /* 64px — 8 units */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px — 12 units */
+  --space-32: 8rem;       /* 128px */
+  --space-40: 10rem;      /* 160px */
+  --space-48: 12rem;      /* 192px */
+
+  /* ── LAYOUT ──────────────────────────────────────────────── */
+  --container-sm:    640px;
+  --container-md:    768px;
+  --container-lg:    1024px;
+  --container-xl:    1280px;
+  --container-2xl:   1440px;
+  --container-prose: 68ch;
+
+  /* ── BORDER RADIUS: Sharp ────────────────────────────────── */
+  --radius-none:    0px;     /* Inputs, textareas, select — fully sharp */
+  --radius-sm:      1px;     /* Buttons, badges — near-sharp */
+  --radius-default: 2px;     /* Cards, containers */
+  --radius-lg:      4px;     /* Large containers — modals, drawers */
+  --radius-full:    9999px;  /* Pills — toggle switches only */
+
+  /* ── SHADOWS ─────────────────────────────────────────────── */
+  --shadow-none:    none;
+  --shadow-sm:      0 1px 2px rgba(30, 26, 24, 0.08);
+  --shadow-default: 0 2px 8px rgba(30, 26, 24, 0.10);
+  --shadow-lg:      0 4px 16px rgba(30, 26, 24, 0.12);
+  --shadow-xl:      0 8px 32px rgba(30, 26, 24, 0.14);
+
+  /* ── MOTION ──────────────────────────────────────────────── */
+  --duration-fast:    100ms;
+  --duration-default: 200ms;
+  --duration-slow:    350ms;
+  --ease-default:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:          cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+
+  /* ── Z-INDEX ─────────────────────────────────────────────── */
+  --z-below:    -1;
+  --z-base:      0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-modal:    300;
+  --z-toast:    400;
+
+}
+
+
+/* ── Dark mode: structure in place, values TBD ───────────────
+   Add data-theme="dark" to <html> when activating.
+   Populate values before implementing dark mode.
+   ─────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+
+  /* Backgrounds */
+  --color-bg-default:  /* TBD — dark page background */;
+  --color-bg-subtle:   /* TBD — dark section background */;
+  --color-bg-inverse:  /* TBD — inverse of dark = light */;
+
+  /* Text */
+  --color-text-default: /* TBD */;
+  --color-text-muted:   /* TBD */;
+  --color-text-inverse: /* TBD */;
+
+  /* Borders */
+  --color-border-default: /* TBD */;
+  --color-border-subtle:  /* TBD */;
+  --color-border-faint:   /* TBD */;
+
+  /* Note: brand colours (crimson, deep, tint) likely remain
+     consistent across light and dark modes.
+     Reassess when implementing. */
+}

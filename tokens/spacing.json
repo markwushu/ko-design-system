@@ -1,0 +1,43 @@
+{
+  "$metadata": {
+    "version": "1.0",
+    "description": "Kept Organised spacing tokens. 8pt base grid. Use multiples of 8 wherever possible. 4px (space-1) available as a half-unit for fine-grained adjustments only."
+  },
+
+  "space": {
+    "0":   { "$value": "0",      "$description": "Zero" },
+    "px":  { "$value": "1px",    "$description": "1px — hairlines, borders" },
+    "1":   { "$value": "0.25rem","$description": "4px — half-unit, fine adjustments only" },
+    "2":   { "$value": "0.5rem", "$description": "8px — 1 unit — tight spacing, icon gaps" },
+    "3":   { "$value": "0.75rem","$description": "12px — 1.5 units — compact padding" },
+    "4":   { "$value": "1rem",   "$description": "16px — 2 units — default element padding" },
+    "5":   { "$value": "1.25rem","$description": "20px — 2.5 units" },
+    "6":   { "$value": "1.5rem", "$description": "24px — 3 units — card padding default, form gaps" },
+    "8":   { "$value": "2rem",   "$description": "32px — 4 units — section sub-spacing, larger cards" },
+    "10":  { "$value": "2.5rem", "$description": "40px — 5 units" },
+    "12":  { "$value": "3rem",   "$description": "48px — 6 units — section padding compact" },
+    "16":  { "$value": "4rem",   "$description": "64px — 8 units — section padding default" },
+    "20":  { "$value": "5rem",   "$description": "80px — 10 units" },
+    "24":  { "$value": "6rem",   "$description": "96px — 12 units — hero padding, major sections" },
+    "32":  { "$value": "8rem",   "$description": "128px — 16 units — max section padding" },
+    "40":  { "$value": "10rem",  "$description": "160px" },
+    "48":  { "$value": "12rem",  "$description": "192px" }
+  },
+
+  "container": {
+    "sm":    { "$value": "640px",  "$description": "Small — narrow content, forms" },
+    "md":    { "$value": "768px",  "$description": "Medium" },
+    "lg":    { "$value": "1024px", "$description": "Large" },
+    "xl":    { "$value": "1280px", "$description": "Extra large — default max-width" },
+    "2xl":   { "$value": "1440px", "$description": "Wide — full-bleed sections only" },
+    "prose": { "$value": "68ch",   "$description": "Optimal reading width for body copy" }
+  },
+
+  "breakpoint": {
+    "sm":  { "$value": "640px",  "$description": "Mobile landscape" },
+    "md":  { "$value": "768px",  "$description": "Tablet" },
+    "lg":  { "$value": "1024px", "$description": "Desktop" },
+    "xl":  { "$value": "1280px", "$description": "Wide desktop" },
+    "2xl": { "$value": "1536px", "$description": "Ultra wide" }
+  }
+}

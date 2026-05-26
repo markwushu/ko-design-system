@@ -1,0 +1,48 @@
+{
+  "$metadata": {
+    "version": "1.0",
+    "description": "Kept Organised effects tokens. Border radius (sharp system), shadows (restrained), motion, and z-index."
+  },
+
+  "radius": {
+    "$description": "Border radius — the brand is sharp and grounded. Minimal rounding.",
+    "none":    { "$value": "0px", "$description": "Fully sharp — inputs, textareas, select elements" },
+    "sm":      { "$value": "1px", "$description": "Near-sharp — buttons, badges, tags" },
+    "default": { "$value": "2px", "$description": "Default — cards, containers" },
+    "lg":      { "$value": "4px", "$description": "Large containers only — modals, drawers, large cards" },
+    "full":    { "$value": "9999px", "$description": "Pills — use only for pill badges or toggle switches" }
+  },
+
+  "shadow": {
+    "$description": "Shadows — restrained. The brand is grounded, not floating. Use sparingly.",
+    "none":    { "$value": "none", "$description": "No shadow — default for bordered elements" },
+    "sm":      { "$value": "0 1px 2px rgba(30, 26, 24, 0.08)", "$description": "Subtle lift — nav on scroll" },
+    "default": { "$value": "0 2px 8px rgba(30, 26, 24, 0.10)", "$description": "Card hover state, dropdown menus" },
+    "lg":      { "$value": "0 4px 16px rgba(30, 26, 24, 0.12)", "$description": "Modals, overlays" },
+    "xl":      { "$value": "0 8px 32px rgba(30, 26, 24, 0.14)", "$description": "Full-screen overlays" }
+  },
+
+  "motion": {
+    "duration": {
+      "fast":    { "$value": "100ms", "$description": "Micro-interactions — icon swaps, colour changes" },
+      "default": { "$value": "200ms", "$description": "Most transitions — hover states, reveals" },
+      "slow":    { "$value": "350ms", "$description": "Larger transitions — panel opens, page reveals" }
+    },
+    "easing": {
+      "default": { "$value": "cubic-bezier(0.16, 1, 0.3, 1)", "$description": "Spring-like — snappy out, natural deceleration" },
+      "in":      { "$value": "cubic-bezier(0.4, 0, 1, 1)",    "$description": "Elements leaving the screen" },
+      "out":     { "$value": "cubic-bezier(0, 0, 0.2, 1)",    "$description": "Elements entering the screen" },
+      "linear":  { "$value": "linear",                         "$description": "Loaders, spinners, continuous animations" }
+    }
+  },
+
+  "z-index": {
+    "below":    { "$value": "-1",  "$description": "Behind base layer" },
+    "base":     { "$value": "0",   "$description": "Default document flow" },
+    "raised":   { "$value": "10",  "$description": "Slightly elevated — card hover, sticky elements" },
+    "dropdown": { "$value": "100", "$description": "Dropdown menus, tooltips" },
+    "sticky":   { "$value": "200", "$description": "Sticky nav, sticky sidebar" },
+    "modal":    { "$value": "300", "$description": "Modal dialogs, drawers" },
+    "toast":    { "$value": "400", "$description": "Toast notifications — above everything" }
+  }
+}

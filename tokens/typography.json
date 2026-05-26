@@ -1,0 +1,78 @@
+{
+  "$metadata": {
+    "version": "1.0",
+    "description": "Kept Organised typography tokens. Families, scale, weights, line-heights, letter-spacing."
+  },
+
+  "font": {
+
+    "family": {
+      "heading": { "$value": "'DM Serif Display', Georgia, serif",           "$description": "H1–H3, Display, pull quotes, price display" },
+      "body":    { "$value": "'DM Sans', system-ui, -apple-system, sans-serif", "$description": "Body copy, H4–H6, UI labels, buttons" },
+      "mono":    { "$value": "'DM Mono', 'Courier New', monospace",          "$description": "Code, technical data, mono accents" }
+    },
+
+    "size": {
+      "display": { "$value": "4rem",    "$description": "64px — hero headlines only, DM Serif Display" },
+      "h1":      { "$value": "3rem",    "$description": "48px — page-level headings, DM Serif Display" },
+      "h2":      { "$value": "2.25rem", "$description": "36px — section headings, DM Serif Display" },
+      "h3":      { "$value": "1.75rem", "$description": "28px — sub-section headings, DM Serif Display" },
+      "h4":      { "$value": "1.375rem","$description": "22px — card headings, sidebar headings, DM Sans Semibold" },
+      "h5":      { "$value": "1.125rem","$description": "18px — component labels, DM Sans Semibold" },
+      "lg":      { "$value": "1.125rem","$description": "18px — intro paragraphs, large body" },
+      "base":    { "$value": "1rem",    "$description": "16px — default body copy" },
+      "sm":      { "$value": "0.875rem","$description": "14px — secondary copy, captions" },
+      "xs":      { "$value": "0.75rem", "$description": "12px — eyebrow labels, metadata, timestamps" },
+      "mono":    { "$value": "0.875rem","$description": "14px — mono / code default" }
+    },
+
+    "weight": {
+      "regular":  { "$value": "400", "$description": "Default — body, DM Serif Display (always regular)" },
+      "medium":   { "$value": "500", "$description": "UI labels, button text, nav links" },
+      "semibold": { "$value": "600", "$description": "H4–H6 in DM Sans, emphasis" },
+      "bold":     { "$value": "700", "$description": "Strong emphasis — use sparingly" }
+    },
+
+    "leading": {
+      "tight":    { "$value": "1.1", "$description": "Display and H1 — large headings need tight leading" },
+      "snug":     { "$value": "1.2", "$description": "H2, H3" },
+      "normal":   { "$value": "1.5", "$description": "Body copy default" },
+      "relaxed":  { "$value": "1.7", "$description": "Long-form reading, testimonials" }
+    },
+
+    "tracking": {
+      "tight":    { "$value": "-0.02em", "$description": "Large headings — Display, H1" },
+      "normal":   { "$value": "0em",     "$description": "Default" },
+      "wide":     { "$value": "0.05em",  "$description": "Small caps, eyebrow labels" },
+      "wider":    { "$value": "0.1em",   "$description": "Uppercase labels — xs size" }
+    }
+  },
+
+  "type": {
+    "style": {
+      "eyebrow": {
+        "$description": "Uppercase context label used above headings",
+        "family":    "font.family.body",
+        "size":      "font.size.xs",
+        "weight":    "font.weight.medium",
+        "transform": "uppercase",
+        "tracking":  "font.tracking.wider"
+      },
+      "display-heading": {
+        "$description": "Hero display headline",
+        "family":   "font.family.heading",
+        "size":     "font.size.display",
+        "weight":   "font.weight.regular",
+        "leading":  "font.leading.tight",
+        "tracking": "font.tracking.tight"
+      },
+      "body-prose": {
+        "$description": "Standard body copy",
+        "family":  "font.family.body",
+        "size":    "font.size.base",
+        "weight":  "font.weight.regular",
+        "leading": "font.leading.normal"
+      }
+    }
+  }
+}

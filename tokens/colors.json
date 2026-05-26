@@ -1,0 +1,67 @@
+{
+  "$schema": "https://kept-organised.com/design-system/schema/tokens.json",
+  "$metadata": {
+    "version": "1.0",
+    "created": "2026-05",
+    "description": "Kept Organised colour tokens. Brand layer contains raw values. Semantic layer contains all usage references — always use semantic tokens in components."
+  },
+
+  "color": {
+
+    "brand": {
+      "$description": "Raw brand palette. Reference semantic tokens in components, not these.",
+      "crimson": { "$value": "#C21F42", "$description": "Primary brand colour" },
+      "deep":    { "$value": "#8A1630", "$description": "Deeper brand red — hover states, emphasis" },
+      "tint":    { "$value": "#F5E6EA", "$description": "Brand tint — backgrounds, subtle fills" },
+      "ink":     { "$value": "#1E1A18", "$description": "Near-black — primary text, borders, inverse backgrounds" },
+      "body":    { "$value": "#5C5450", "$description": "Warm mid-grey — secondary text, muted UI" },
+      "ground":  { "$value": "#FAF8F5", "$description": "Warm off-white — page background, inverse text" }
+    },
+
+    "bg": {
+      "$description": "Background colours",
+      "default":  { "$value": "{color.brand.ground}", "$description": "Main page background" },
+      "subtle":   { "$value": "{color.brand.tint}",   "$description": "Section backgrounds, card fills" },
+      "inverse":  { "$value": "{color.brand.ink}",    "$description": "Dark sections, inverse cards" },
+      "brand":    { "$value": "{color.brand.crimson}", "$description": "Brand-fill backgrounds — use sparingly" }
+    },
+
+    "text": {
+      "$description": "Text colours",
+      "default":  { "$value": "{color.brand.ink}",     "$description": "Primary text" },
+      "muted":    { "$value": "{color.brand.body}",    "$description": "Secondary text, captions, helper text" },
+      "inverse":  { "$value": "{color.brand.ground}",  "$description": "Text on dark/inverse backgrounds" },
+      "brand":    { "$value": "{color.brand.crimson}", "$description": "Brand emphasis, links, active states" },
+      "subtle":   { "$value": "{color.brand.deep}",    "$description": "Secondary brand text" }
+    },
+
+    "action": {
+      "$description": "Interactive element colours",
+      "primary":            { "$value": "{color.brand.crimson}", "$description": "Primary button fill" },
+      "primary-hover":      { "$value": "{color.brand.deep}",    "$description": "Primary button hover fill" },
+      "primary-text":       { "$value": "{color.brand.ground}",  "$description": "Primary button text" },
+      "secondary-border":   { "$value": "{color.brand.ink}",     "$description": "Secondary button border" },
+      "secondary-text":     { "$value": "{color.brand.ink}",     "$description": "Secondary button text" },
+      "secondary-hover-bg": { "$value": "{color.brand.ink}",     "$description": "Secondary button hover background" },
+      "secondary-hover-text": { "$value": "{color.brand.ground}", "$description": "Secondary button hover text" },
+      "ghost-text":         { "$value": "{color.brand.crimson}", "$description": "Ghost button text" },
+      "ghost-hover-bg":     { "$value": "{color.brand.tint}",    "$description": "Ghost button hover background" }
+    },
+
+    "border": {
+      "$description": "Border colours",
+      "default":  { "$value": "{color.brand.ink}",     "$description": "Strong borders — inputs, cards, nav" },
+      "subtle":   { "$value": "{color.brand.body}",    "$description": "Secondary borders" },
+      "faint":    { "$value": "{color.brand.tint}",    "$description": "Dividers, separator lines" },
+      "brand":    { "$value": "{color.brand.crimson}", "$description": "Brand accent borders, focus borders" }
+    },
+
+    "state": {
+      "$description": "Feedback state colours",
+      "focus":    { "$value": "{color.brand.crimson}", "$description": "Focus ring — matches brand primary" },
+      "error":    { "$value": "{color.brand.crimson}", "$description": "Error states — intentional overlap with brand, clear in context" },
+      "success":  { "$value": "#3D6B4F",               "$description": "Success states — muted green, outside brand palette" },
+      "warning":  { "$value": "#8A6030",               "$description": "Warning states — muted amber, outside brand palette" }
+    }
+  }
+}
