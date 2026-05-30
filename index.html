@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kept Organised — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-brand-crimson: #C21F42;
+      --color-brand-deep:    #8A1630;
+      --color-brand-tint:    #F5E6EA;
+      --color-brand-ink:     #1E1A18;
+      --color-brand-body:    #5C5450;
+      --color-brand-ground:  #FAF8F5;
+      --color-bg-default:    #FAF8F5;
+      --color-bg-subtle:     #F5E6EA;
+      --color-bg-inverse:    #1E1A18;
+      --color-text-default:  #1E1A18;
+      --color-text-muted:    #5C5450;
+      --color-text-inverse:  #FAF8F5;
+      --color-text-brand:    #C21F42;
+      --color-border-default:#1E1A18;
+      --color-border-faint:  #E8E0DC;
+      --color-action-primary:#C21F42;
+      --font-heading: 'DM Serif Display', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --sidebar-width: 256px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg-default);
+      color: var(--color-text-default);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      background: var(--color-bg-inverse);
+      color: var(--color-text-inverse);
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 100;
+      transition: transform 0.25s ease;
+    }
+
+    .sidebar-header {
+      padding: 32px 24px 24px;
+      border-bottom: 1px solid rgba(250,248,245,0.1);
+    }
+
+    .sidebar-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--color-text-inverse);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .sidebar-wordmark span {
+      color: var(--color-brand-crimson);
+    }
+
+    .sidebar-meta {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--color-brand-body);
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 0;
+    }
+
+    .nav-section {
+      padding: 16px 24px 8px;
+    }
+
+    .nav-section-label {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--color-brand-body);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 6px 0;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(250,248,245,0.65);
+      text-decoration: none;
+      transition: color 0.15s;
+      line-height: 1.4;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--color-text-inverse);
+    }
+
+    .nav-link.active {
+      color: var(--color-brand-crimson);
+    }
+
+    .sidebar-footer {
+      padding: 20px 24px;
+      border-top: 1px solid rgba(250,248,245,0.1);
+    }
+
+    .sidebar-footer a {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--color-brand-body);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 4px;
+      transition: color 0.15s;
+    }
+
+    .sidebar-footer a:hover { color: var(--color-text-inverse); }
+
+    /* ── Mobile header ──────────────────────────────────── */
+    .mobile-header {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--color-bg-inverse);
+      z-index: 200;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid rgba(250,248,245,0.1);
+    }
+
+    .mobile-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--color-text-inverse);
+    }
+
+    .mobile-wordmark span { color: var(--color-brand-crimson); }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-inverse);
+      padding: 4px;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30,26,24,0.6);
+      z-index: 99;
+    }
+
+    /* ── Main content ───────────────────────────────────── */
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .section {
+      padding: 72px 64px;
+      border-bottom: 1px solid var(--color-border-faint);
+      max-width: 900px;
+    }
+
+    .section:last-child { border-bottom: none; }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-brand);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+      max-width: 60ch;
+      margin-bottom: 48px;
+    }
+
+    /* ── Overview hero ──────────────────────────────────── */
+    .overview-section {
+      padding: 80px 64px;
+      background: var(--color-bg-inverse);
+      color: var(--color-text-inverse);
+      max-width: 100%;
+      border-bottom: none;
+    }
+
+    .overview-section .section-eyebrow { color: var(--color-brand-crimson); }
+    .overview-section .section-title { color: var(--color-text-inverse); font-size: 3rem; }
+    .overview-section .section-desc { color: rgba(250,248,245,0.6); }
+
+    .overview-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(250,248,245,0.1);
+      margin-top: 48px;
+      border: 1px solid rgba(250,248,245,0.1);
+    }
+
+    .stat {
+      padding: 24px;
+      background: var(--color-bg-inverse);
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--color-text-inverse);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: rgba(250,248,245,0.5);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── Colour swatches ────────────────────────────────── */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+
+    .swatch {
+      border: 1px solid transparent;
+    }
+
+    .swatch-color {
+      height: 96px;
+    }
+
+    .swatch-info {
+      padding: 12px;
+      background: white;
+      border-top: 1px solid var(--color-border-faint);
+    }
+
+    .swatch-name {
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .swatch-token {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-brand-crimson);
+      display: block;
+    }
+
+    .semantic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .semantic-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--color-border-faint);
+    }
+
+    .semantic-dot {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .semantic-token {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-default);
+      display: block;
+    }
+
+    .semantic-desc {
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Type specimens ─────────────────────────────────── */
+    .type-specimen {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--color-border-faint);
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .type-specimen:last-child { border-bottom: none; }
+
+    .type-meta { padding-top: 6px; }
+
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-brand);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .type-size {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .type-family {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-brand-body);
+      display: block;
+    }
+
+    /* ── Spacing scale ──────────────────────────────────── */
+    .space-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border-faint);
+    }
+
+    .space-row:last-child { border-bottom: none; }
+
+    .space-token {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-brand);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .space-bar-wrap { flex: 1; }
+
+    .space-bar {
+      background: var(--color-brand-tint);
+      border: 1px solid var(--color-brand-crimson);
+      height: 20px;
+    }
+
+    .space-value {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      width: 48px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    /* ── Effects demos ──────────────────────────────────── */
+    .effects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .effect-card {
+      padding: 24px;
+      border: 1px solid var(--color-border-faint);
+    }
+
+    .radius-demo {
+      width: 48px;
+      height: 48px;
+      background: var(--color-brand-crimson);
+      margin-bottom: 12px;
+    }
+
+    .shadow-demo {
+      width: 64px;
+      height: 40px;
+      background: white;
+      border: 1px solid var(--color-border-faint);
+      margin-bottom: 12px;
+    }
+
+    .effect-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-brand);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .effect-value {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+    }
+
+    /* ── Component demos ────────────────────────────────── */
+    .component-demo {
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border-faint);
+      padding: 40px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .component-demo.dark {
+      background: var(--color-bg-inverse);
+    }
+
+    /* Live buttons */
+    .ko-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 12px 24px;
+      border-radius: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .ko-btn-primary {
+      background: var(--color-brand-crimson);
+      color: var(--color-brand-ground);
+      border-color: var(--color-brand-crimson);
+    }
+
+    .ko-btn-primary:hover {
+      background: var(--color-brand-deep);
+      border-color: var(--color-brand-deep);
+    }
+
+    .ko-btn-secondary {
+      background: transparent;
+      color: var(--color-text-default);
+      border-color: var(--color-text-default);
+    }
+
+    .ko-btn-secondary:hover {
+      background: var(--color-text-default);
+      color: var(--color-brand-ground);
+    }
+
+    .ko-btn-ghost {
+      background: transparent;
+      color: var(--color-brand-crimson);
+      border-color: transparent;
+    }
+
+    .ko-btn-ghost:hover { background: var(--color-brand-tint); }
+
+    /* Live cards */
+    .ko-card-demo {
+      background: var(--color-bg-default);
+      border: 1px solid var(--color-border-default);
+      border-radius: 2px;
+      padding: 24px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .ko-card-demo h4 {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      margin-bottom: 8px;
+    }
+
+    .ko-card-demo p {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .ko-card-tinted {
+      background: var(--color-bg-subtle);
+      border: none;
+    }
+
+    .ko-card-inverse {
+      background: var(--color-bg-inverse);
+      border: none;
+    }
+
+    .ko-card-inverse h4 { color: var(--color-text-inverse); }
+    .ko-card-inverse p { color: rgba(250,248,245,0.6); }
+
+    /* Live form elements */
+    .ko-field { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+
+    .ko-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 8px;
+    }
+
+    .ko-input {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text-default);
+      background: var(--color-bg-default);
+      border: 1px solid var(--color-border-default);
+      border-radius: 0;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.1s;
+    }
+
+    .ko-input:focus { border-color: var(--color-brand-crimson); }
+
+    /* Spec table ─────────────────────────────────────────── */
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-bottom: 32px;
+    }
+
+    .spec-table th {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      text-align: left;
+      padding: 8px 16px 8px 0;
+      border-bottom: 1px solid var(--color-border-default);
+      font-weight: 500;
+    }
+
+    .spec-table td {
+      padding: 10px 16px 10px 0;
+      border-bottom: 1px solid var(--color-border-faint);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .spec-table td:first-child {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-brand);
+      white-space: nowrap;
+    }
+
+    /* Rule lists ─────────────────────────────────────────── */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .rule-block h4 {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid;
+    }
+
+    .rule-do h4 { color: #3D6B4F; border-color: #3D6B4F; }
+    .rule-dont h4 { color: var(--color-brand-crimson); border-color: var(--color-brand-crimson); }
+
+    .rule-block ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rule-block li {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--color-text-muted);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .rule-do li::before { content: '✓'; position: absolute; left: 0; color: #3D6B4F; font-size: 0.7rem; }
+    .rule-dont li::before { content: '✕'; position: absolute; left: 0; color: var(--color-brand-crimson); font-size: 0.7rem; }
+
+    /* Principle cards ────────────────────────────────────── */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--color-border-faint);
+      border: 1px solid var(--color-border-faint);
+    }
+
+    .principle {
+      background: var(--color-bg-default);
+      padding: 28px;
+    }
+
+    .principle-number {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-brand);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .principle h3 {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .principle p {
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: var(--color-text-muted);
+    }
+
+    /* Voice rules ────────────────────────────────────────── */
+    .voice-pair {
+      border: 1px solid var(--color-border-faint);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .voice-pair-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 8px 16px;
+      background: var(--color-bg-subtle);
+      color: var(--color-text-muted);
+      border-bottom: 1px solid var(--color-border-faint);
+    }
+
+    .voice-good, .voice-bad {
+      padding: 14px 16px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .voice-good { border-bottom: 1px solid var(--color-border-faint); }
+
+    .voice-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    .voice-good .voice-badge { background: #3D6B4F; color: white; }
+    .voice-bad .voice-badge { background: var(--color-brand-crimson); color: white; }
+
+    /* Inline code ────────────────────────────────────────── */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.75em;
+      background: var(--color-bg-subtle);
+      padding: 2px 6px;
+      color: var(--color-text-default);
+    }
+
+    /* Sub-heading ────────────────────────────────────────── */
+    .sub-heading {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      margin: 48px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .sub-heading:first-of-type { margin-top: 0; }
+
+    /* Responsive ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .mobile-header { display: flex; }
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .main { margin-left: 0; padding-top: 56px; }
+      .section { padding: 48px 24px; }
+      .overview-section { padding: 48px 24px; }
+      .overview-stats { grid-template-columns: repeat(2,1fr); }
+      .swatch-grid { grid-template-columns: repeat(2,1fr); }
+      .semantic-grid { grid-template-columns: 1fr; }
+      .effects-grid { grid-template-columns: 1fr 1fr; }
+      .type-specimen { grid-template-columns: 1fr; gap: 12px; }
+      .rules-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .swatch-grid { grid-template-columns: 1fr; }
+      .effects-grid { grid-template-columns: 1fr; }
+      .overview-stats { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile header -->
+<header class="mobile-header">
+  <span class="mobile-wordmark">Kept <span>Organised</span></span>
+  <button class="hamburger" id="menuBtn" aria-label="Toggle menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-wordmark">Kept <span>Organised</span></span>
+    <span class="sidebar-meta">Design System v1.0</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Start</div>
+      <a href="#overview" class="nav-link">Overview</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Tokens</div>
+      <a href="#colours" class="nav-link">Colour</a>
+      <a href="#typography" class="nav-link">Typography</a>
+      <a href="#spacing" class="nav-link">Spacing</a>
+      <a href="#effects" class="nav-link">Effects</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Components</div>
+      <a href="#buttons" class="nav-link">Button</a>
+      <a href="#cards" class="nav-link">Card</a>
+      <a href="#forms" class="nav-link">Form Elements</a>
+      <a href="#navigation" class="nav-link">Navigation</a>
+      <a href="#hero" class="nav-link">Hero</a>
+      <a href="#testimonial" class="nav-link">Testimonial</a>
+      <a href="#price-cta" class="nav-link">Price / CTA</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Brand</div>
+      <a href="#voice" class="nav-link">Voice</a>
+      <a href="#illustration" class="nav-link">Illustration</a>
+      <a href="#principles" class="nav-link">Principles</a>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="https://github.com/markwushu/ko-design-system" target="_blank">→ GitHub repo</a>
+    <a href="css/tokens.css" target="_blank">→ tokens.css</a>
+    <a href="tailwind.config.js" target="_blank">→ tailwind.config.js</a>
+  </div>
+</aside>
+
+<!-- Main content -->
+<main class="main">
+
+  <!-- Overview -->
+  <section class="section overview-section" id="overview">
+    <div class="section-eyebrow">ko-design-system</div>
+    <h1 class="section-title">The Kept Organised<br>Design System</h1>
+    <p class="section-desc">A complete, AI-readable design system for the Kept Organised brand. Tokens, component specs, and brand guidelines — structured for Claude, Claude Code, and any future tooling.</p>
+    <div class="overview-stats">
+      <div class="stat"><span class="stat-number">6</span><span class="stat-label">Brand colours</span></div>
+      <div class="stat"><span class="stat-number">4</span><span class="stat-label">Token files</span></div>
+      <div class="stat"><span class="stat-number">8</span><span class="stat-label">Components</span></div>
+      <div class="stat"><span class="stat-number">3</span><span class="stat-label">Type families</span></div>
+    </div>
+  </section>
+
+  <!-- Colour -->
+  <section class="section" id="colours">
+    <div class="section-eyebrow">Tokens / Colour</div>
+    <h2 class="section-title">Colour</h2>
+    <p class="section-desc">Six brand colours forming a warm, restrained palette. Always reference semantic tokens in components — never raw hex values.</p>
+
+    <h3 class="sub-heading">Brand palette</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C21F42"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Crimson</span>
+          <span class="swatch-hex">#C21F42</span>
+          <span class="swatch-token">--color-brand-crimson</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#8A1630"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Deep</span>
+          <span class="swatch-hex">#8A1630</span>
+          <span class="swatch-token">--color-brand-deep</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F5E6EA; border: 1px solid #e8d8dc"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Tint</span>
+          <span class="swatch-hex">#F5E6EA</span>
+          <span class="swatch-token">--color-brand-tint</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1E1A18"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Ink</span>
+          <span class="swatch-hex">#1E1A18</span>
+          <span class="swatch-token">--color-brand-ink</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#5C5450"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Body</span>
+          <span class="swatch-hex">#5C5450</span>
+          <span class="swatch-token">--color-brand-body</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FAF8F5; border: 1px solid #e8e0dc"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Ground</span>
+          <span class="swatch-hex">#FAF8F5</span>
+          <span class="swatch-token">--color-brand-ground</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Semantic tokens</h3>
+    <div class="semantic-grid">
+      <div class="semantic-row"><div class="semantic-dot" style="background:#FAF8F5;border-color:#ddd"></div><div><span class="semantic-token">--color-bg-default</span><span class="semantic-desc">Main page background</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#F5E6EA"></div><div><span class="semantic-token">--color-bg-subtle</span><span class="semantic-desc">Section and card backgrounds</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#1E1A18"></div><div><span class="semantic-token">--color-bg-inverse</span><span class="semantic-desc">Dark section backgrounds</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#1E1A18"></div><div><span class="semantic-token">--color-text-default</span><span class="semantic-desc">Primary text</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#5C5450"></div><div><span class="semantic-token">--color-text-muted</span><span class="semantic-desc">Secondary text, captions</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#C21F42"></div><div><span class="semantic-token">--color-text-brand</span><span class="semantic-desc">Brand emphasis, links</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#C21F42"></div><div><span class="semantic-token">--color-action-primary</span><span class="semantic-desc">Primary button fill</span></div></div>
+      <div class="semantic-row"><div class="semantic-dot" style="background:#1E1A18"></div><div><span class="semantic-token">--color-border-default</span><span class="semantic-desc">Inputs, cards, nav</span></div></div>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section class="section" id="typography">
+    <div class="section-eyebrow">Tokens / Typography</div>
+    <h2 class="section-title">Typography</h2>
+    <p class="section-desc">DM Serif Display carries authority and warmth. DM Sans carries clarity. DM Mono for code and data. Never use bold weight on DM Serif Display.</p>
+
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">Display</span>
+        <span class="type-size">64px / 4rem</span>
+        <span class="type-family">DM Serif Display</span>
+      </div>
+      <div style="font-family:var(--font-heading);font-size:3.5rem;line-height:1.1;letter-spacing:-0.02em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">The system works</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">H1</span>
+        <span class="type-size">48px / 3rem</span>
+        <span class="type-family">DM Serif Display</span>
+      </div>
+      <div style="font-family:var(--font-heading);font-size:2.5rem;line-height:1.1;letter-spacing:-0.02em">A clear plan, every Monday</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">H2</span>
+        <span class="type-size">36px / 2.25rem</span>
+        <span class="type-family">DM Serif Display</span>
+      </div>
+      <div style="font-family:var(--font-heading);font-size:2rem;line-height:1.2">What you get</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">H3</span>
+        <span class="type-size">28px / 1.75rem</span>
+        <span class="type-family">DM Serif Display</span>
+      </div>
+      <div style="font-family:var(--font-heading);font-size:1.6rem;line-height:1.2">The weekly review</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">H4</span>
+        <span class="type-size">22px / 1.375rem</span>
+        <span class="type-family">DM Sans Semibold</span>
+      </div>
+      <div style="font-family:var(--font-body);font-size:1.25rem;font-weight:600;line-height:1.4">Know what matters</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">Body Large</span>
+        <span class="type-size">18px / 1.125rem</span>
+        <span class="type-family">DM Sans</span>
+      </div>
+      <div style="font-family:var(--font-body);font-size:1.1rem;line-height:1.6;color:var(--color-text-muted)">The reset takes twenty minutes. You already know roughly what needs doing — the problem is getting it out of your head.</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">Body</span>
+        <span class="type-size">16px / 1rem</span>
+        <span class="type-family">DM Sans</span>
+      </div>
+      <div style="font-family:var(--font-body);font-size:1rem;line-height:1.6;color:var(--color-text-muted)">Default body copy for extended reading. Max line length 68 characters. Line-height 1.5 standard, 1.7 for long-form.</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">Eyebrow</span>
+        <span class="type-size">12px / 0.75rem</span>
+        <span class="type-family">DM Sans Medium</span>
+      </div>
+      <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-brand)">The Method</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta">
+        <span class="type-label">Mono</span>
+        <span class="type-size">14px / 0.875rem</span>
+        <span class="type-family">DM Mono</span>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:0.875rem;color:var(--color-text-muted)">--color-action-primary: #C21F42</div>
+    </div>
+  </section>
+
+  <!-- Spacing -->
+  <section class="section" id="spacing">
+    <div class="section-eyebrow">Tokens / Spacing</div>
+    <h2 class="section-title">Spacing</h2>
+    <p class="section-desc">8pt base grid. Use multiples of 8 wherever possible. The 4px half-unit exists for fine adjustments only.</p>
+
+    <div style="margin-top:8px">
+      <div class="space-row"><span class="space-token">--space-1</span><div class="space-bar-wrap"><div class="space-bar" style="width:4px"></div></div><span class="space-value">4px</span></div>
+      <div class="space-row"><span class="space-token">--space-2</span><div class="space-bar-wrap"><div class="space-bar" style="width:8px"></div></div><span class="space-value">8px</span></div>
+      <div class="space-row"><span class="space-token">--space-3</span><div class="space-bar-wrap"><div class="space-bar" style="width:12px"></div></div><span class="space-value">12px</span></div>
+      <div class="space-row"><span class="space-token">--space-4</span><div class="space-bar-wrap"><div class="space-bar" style="width:16px"></div></div><span class="space-value">16px</span></div>
+      <div class="space-row"><span class="space-token">--space-6</span><div class="space-bar-wrap"><div class="space-bar" style="width:24px"></div></div><span class="space-value">24px</span></div>
+      <div class="space-row"><span class="space-token">--space-8</span><div class="space-bar-wrap"><div class="space-bar" style="width:32px"></div></div><span class="space-value">32px</span></div>
+      <div class="space-row"><span class="space-token">--space-12</span><div class="space-bar-wrap"><div class="space-bar" style="width:48px"></div></div><span class="space-value">48px</span></div>
+      <div class="space-row"><span class="space-token">--space-16</span><div class="space-bar-wrap"><div class="space-bar" style="width:64px"></div></div><span class="space-value">64px</span></div>
+      <div class="space-row"><span class="space-token">--space-24</span><div class="space-bar-wrap"><div class="space-bar" style="width:96px"></div></div><span class="space-value">96px</span></div>
+      <div class="space-row"><span class="space-token">--space-32</span><div class="space-bar-wrap"><div class="space-bar" style="width:128px"></div></div><span class="space-value">128px</span></div>
+    </div>
+  </section>
+
+  <!-- Effects -->
+  <section class="section" id="effects">
+    <div class="section-eyebrow">Tokens / Effects</div>
+    <h2 class="section-title">Effects</h2>
+    <p class="section-desc">Sharp radius, restrained shadows, purposeful motion. The brand is grounded — nothing floats unnecessarily.</p>
+
+    <h3 class="sub-heading">Border radius</h3>
+    <div class="effects-grid">
+      <div class="effect-card"><div class="radius-demo" style="border-radius:0"></div><span class="effect-label">--radius-none</span><span class="effect-value">0px — inputs, textareas</span></div>
+      <div class="effect-card"><div class="radius-demo" style="border-radius:1px"></div><span class="effect-label">--radius-sm</span><span class="effect-value">1px — buttons, badges</span></div>
+      <div class="effect-card"><div class="radius-demo" style="border-radius:2px"></div><span class="effect-label">--radius-default</span><span class="effect-value">2px — cards, containers</span></div>
+    </div>
+
+    <h3 class="sub-heading">Shadows</h3>
+    <div class="effects-grid">
+      <div class="effect-card"><div class="shadow-demo" style="box-shadow:0 1px 2px rgba(30,26,24,0.08)"></div><span class="effect-label">--shadow-sm</span><span class="effect-value">Nav on scroll</span></div>
+      <div class="effect-card"><div class="shadow-demo" style="box-shadow:0 2px 8px rgba(30,26,24,0.10)"></div><span class="effect-label">--shadow-default</span><span class="effect-value">Card hover, dropdowns</span></div>
+      <div class="effect-card"><div class="shadow-demo" style="box-shadow:0 4px 16px rgba(30,26,24,0.12)"></div><span class="effect-label">--shadow-lg</span><span class="effect-value">Modals, overlays</span></div>
+    </div>
+
+    <h3 class="sub-heading">Motion</h3>
+    <table class="spec-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>--duration-fast</td><td>100ms</td><td>Micro-interactions, colour changes</td></tr>
+        <tr><td>--duration-default</td><td>200ms</td><td>Hover states, most transitions</td></tr>
+        <tr><td>--duration-slow</td><td>350ms</td><td>Panel opens, larger reveals</td></tr>
+        <tr><td>--ease-default</td><td>cubic-bezier(0.16,1,0.3,1)</td><td>Default — snappy out</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Buttons -->
+  <section class="section" id="buttons">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Button</h2>
+    <p class="section-desc">One primary button per section. Secondary and ghost exist for supporting actions only — never in competition with the primary.</p>
+
+    <div class="component-demo">
+      <a href="#" class="ko-btn ko-btn-primary">Start the reset</a>
+      <a href="#" class="ko-btn ko-btn-secondary">Learn more</a>
+      <a href="#" class="ko-btn ko-btn-ghost">View all →</a>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Variant</th><th>Fill</th><th>Border</th><th>Text</th></tr></thead>
+      <tbody>
+        <tr><td>Primary</td><td>--color-action-primary</td><td>--color-action-primary</td><td>--color-brand-ground</td></tr>
+        <tr><td>Secondary</td><td>transparent</td><td>--color-border-default</td><td>--color-text-default</td></tr>
+        <tr><td>Ghost</td><td>transparent</td><td>transparent</td><td>--color-text-brand</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>One primary button per visible section</li>
+        <li>Write labels as verbs: "Start the reset"</li>
+        <li>Full-width on mobile CTA sections</li>
+        <li>Match size to context — lg for hero CTAs</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Use fake-urgent labels: "BUY NOW"</li>
+        <li>Place more than one primary per section</li>
+        <li>Truncate labels — resize the button</li>
+        <li>Uppercase labels (reads as shouting)</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section class="section" id="cards">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Card</h2>
+    <p class="section-desc">A contained visual unit. Cards contain content — they don't decorate it. Border radius maximum 2px.</p>
+
+    <div class="component-demo" style="background:#eee;gap:12px">
+      <div class="ko-card-demo"><h4>Default card</h4><p>Used on Ground (#FAF8F5) pages. 1px Ink border, 2px radius.</p></div>
+      <div class="ko-card-demo ko-card-tinted"><h4>Tinted card</h4><p>No border. Use on white or Ground backgrounds to add warmth.</p></div>
+      <div class="ko-card-demo ko-card-inverse"><h4>Inverse card</h4><p>Dark background for emphasis or feature highlights.</p></div>
+    </div>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>Keep cards consistent in size within a grid</li>
+        <li>Let illustrations carry visual interest</li>
+        <li>Use tinted variant to group without hard borders</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Add shadows to static (non-interactive) cards</li>
+        <li>Round corners beyond 2px</li>
+        <li>Put cards inside cards</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Forms -->
+  <section class="section" id="forms">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Form Elements</h2>
+    <p class="section-desc">Precise and honest. No decorative chrome. Inputs are fully sharp — border-radius: 0. Labels are uppercase, small, above every input.</p>
+
+    <div class="component-demo" style="flex-direction:column;align-items:stretch">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="ko-field">
+          <label class="ko-label">First name</label>
+          <input class="ko-input" type="text" placeholder="Mark">
+        </div>
+        <div class="ko-field">
+          <label class="ko-label">Email address *</label>
+          <input class="ko-input" type="email" placeholder="mark@example.com">
+        </div>
+      </div>
+    </div>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>Labels always above inputs</li>
+        <li>Placeholder shows an example value</li>
+        <li>Validate inline after field blur</li>
+        <li>Error messages appear below the field</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Use placeholder text as the label</li>
+        <li>Round input corners at all — 0px is correct</li>
+        <li>Show all errors only on submit</li>
+        <li>Use floating labels</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="section" id="navigation">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Navigation</h2>
+    <p class="section-desc">Minimal wayfinding. 4 links maximum on desktop. Always includes a CTA. Sticky with shadow-sm added on scroll.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Height</td><td>64px</td></tr>
+        <tr><td>Max width</td><td>--container-xl (1280px)</td></tr>
+        <tr><td>Background</td><td>--color-bg-default</td></tr>
+        <tr><td>On scroll</td><td>border-bottom 1px --color-border-faint + --shadow-sm</td></tr>
+        <tr><td>Link font</td><td>DM Sans, --text-sm, --weight-medium</td></tr>
+        <tr><td>Mobile menu bg</td><td>--color-bg-inverse (Ink)</td></tr>
+        <tr><td>Logo</td><td>Wordmark only — DM Serif Display</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>Keep desktop links to 4 or fewer</li>
+        <li>Always include a CTA button in the nav</li>
+        <li>Lock body scroll when mobile menu is open</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Add dropdowns unless architecture requires it</li>
+        <li>Animate the logo</li>
+        <li>Use mega-menus</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Hero -->
+  <section class="section" id="hero">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Hero</h2>
+    <p class="section-desc">The hook that earns the scroll. One headline, one subhead, one CTA. Illustration right on desktop, stacked on mobile.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Element</th><th>Spec</th></tr></thead>
+      <tbody>
+        <tr><td>Layout (desktop)</td><td>2-column: 58% text / 42% illustration</td></tr>
+        <tr><td>Padding (desktop)</td><td>--space-24 top and bottom (96px)</td></tr>
+        <tr><td>Headline</td><td>DM Serif Display, --text-display desktop / --text-h1 mobile</td></tr>
+        <tr><td>Subhead</td><td>DM Sans, --text-lg, --color-text-muted, max 52ch</td></tr>
+        <tr><td>CTA</td><td>Primary button, lg size — one only</td></tr>
+        <tr><td>Illustration min width</td><td>280px</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>One CTA only — never split attention</li>
+        <li>Aim for the "finally" register in the headline</li>
+        <li>Max 10 words in the headline</li>
+        <li>Test headline variants — highest-leverage copy</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Use video backgrounds</li>
+        <li>Animate headline text</li>
+        <li>Add more than one button</li>
+        <li>Use stock photography or AI imagery</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="section" id="testimonial">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Testimonial</h2>
+    <p class="section-desc">Social proof that addresses specific objections. Place next to the claim it supports — not grouped at the page bottom.</p>
+
+    <div class="component-demo" style="flex-direction:column">
+      <blockquote style="padding-left:24px;border-left:2px solid var(--color-brand-crimson)">
+        <p style="font-family:var(--font-heading);font-style:italic;font-size:1.25rem;line-height:1.4;margin-bottom:10px">"I've tried every productivity system going. This is the first one I've actually stuck to past week two."</p>
+        <cite style="font-family:var(--font-body);font-size:0.8rem;color:var(--color-text-muted);font-style:normal">— Sarah T., project manager</cite>
+      </blockquote>
+    </div>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>Use specific, real testimonials</li>
+        <li>Include first name and context</li>
+        <li>Choose quotes that address real objections</li>
+        <li>Place adjacent to the claim they support</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Use star ratings — they're generic</li>
+        <li>Use stock photo avatars</li>
+        <li>Group all at the page bottom</li>
+        <li>Use vague praise: "It's great!"</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Price CTA -->
+  <section class="section" id="price-cta">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="section-title">Price / CTA Block</h2>
+    <p class="section-desc">The moment of purchase decision. Remove friction. Every element earns its place.</p>
+
+    <div class="component-demo" style="justify-content:center">
+      <div style="background:var(--color-bg-default);border:1px solid var(--color-border-default);border-radius:2px;padding:40px;max-width:400px;width:100%">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-muted);display:block;margin-bottom:12px">Get the system</span>
+        <h3 style="font-family:var(--font-heading);font-size:1.75rem;margin-bottom:8px">Weekly Reset</h3>
+        <p style="font-size:0.95rem;color:var(--color-text-muted);margin-bottom:20px">A 20-minute weekly reset that actually sticks.</p>
+        <div style="display:flex;align-items:baseline;gap:2px;margin-bottom:4px">
+          <span style="font-family:var(--font-heading);font-size:1.5rem;align-self:flex-start;margin-top:8px">$</span>
+          <span style="font-family:var(--font-heading);font-size:3.5rem;line-height:1">27</span>
+        </div>
+        <p style="font-size:0.75rem;color:var(--color-text-muted);margin-bottom:20px">one-time payment</p>
+        <ul style="list-style:none;padding:0;margin-bottom:24px;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:0.85rem;color:var(--color-text-default);display:flex;gap:10px"><span style="color:var(--color-brand-crimson)">—</span>A clear plan every Monday morning</li>
+          <li style="font-size:0.85rem;color:var(--color-text-default);display:flex;gap:10px"><span style="color:var(--color-brand-crimson)">—</span>The exact weekly review questions</li>
+          <li style="font-size:0.85rem;color:var(--color-text-default);display:flex;gap:10px"><span style="color:var(--color-brand-crimson)">—</span>A Notion workspace that doesn't need managing</li>
+        </ul>
+        <a href="#" class="ko-btn ko-btn-primary" style="width:100%;justify-content:center;margin-bottom:12px">Start the reset</a>
+        <p style="font-size:0.75rem;color:var(--color-text-muted);text-align:center;line-height:1.5">Work through it once. If you don't feel clearer, email for a full refund.</p>
+      </div>
+    </div>
+
+    <div class="rules-grid" style="margin-top:32px">
+      <div class="rule-block rule-do"><h4>Do</h4><ul>
+        <li>Write includes as outcomes, not feature names</li>
+        <li>State a specific guarantee</li>
+        <li>Match CTA label to the outcome</li>
+      </ul></div>
+      <div class="rule-block rule-dont"><h4>Don't</h4><ul>
+        <li>Use countdown timers</li>
+        <li>Manufacture scarcity</li>
+        <li>Inflate perceived value ("Worth $997")</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Voice -->
+  <section class="section" id="voice">
+    <div class="section-eyebrow">Brand</div>
+    <h2 class="section-title">Voice</h2>
+    <p class="section-desc">Wry. Honest. Grounded. Sharp. The voice of a practitioner who found something that works and is sharing it clearly — not a coach, not a guru.</p>
+
+    <div class="voice-pair">
+      <div class="voice-pair-label">Wry, not sarcastic</div>
+      <div class="voice-good"><span class="voice-badge">DO</span><span>"You already know roughly what needs doing. The problem is getting it out of your head."</span></div>
+      <div class="voice-bad"><span class="voice-badge">DON'T</span><span>"Still drowning in sticky notes? Classic."</span></div>
+    </div>
+    <div class="voice-pair">
+      <div class="voice-pair-label">Honest, not harsh</div>
+      <div class="voice-good"><span class="voice-badge">DO</span><span>"If your Notion workspace is so complex that you avoid opening it, that is a design problem."</span></div>
+      <div class="voice-bad"><span class="voice-badge">DON'T</span><span>"Stop overcomplicating everything."</span></div>
+    </div>
+    <div class="voice-pair">
+      <div class="voice-pair-label">Confident, not aggressive</div>
+      <div class="voice-good"><span class="voice-badge">DO</span><span>"This is a good system. It will work if you work it."</span></div>
+      <div class="voice-bad"><span class="voice-badge">DON'T</span><span>"This is THE system. Thousands have transformed their lives. Don't miss out."</span></div>
+    </div>
+
+    <h3 class="sub-heading">AI tells to remove</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+      <code>dive into</code><code>game-changer</code><code>transform</code><code>unlock</code>
+      <code>genuinely</code><code>leverage</code><code>harness</code><code>revolutionary</code>
+      <code>In conclusion</code><code>It's worth noting</code><code>straightforward</code>
+      <code>powerful</code><code>truly</code><code>comprehensive</code>
+    </div>
+  </section>
+
+  <!-- Illustration -->
+  <section class="section" id="illustration">
+    <div class="section-eyebrow">Brand</div>
+    <h2 class="section-title">Illustration</h2>
+    <p class="section-desc">Hand-drawn ink and pencil line work of everyday planning objects — rendered with the attention usually reserved for fine art. Reference: Lee John Phillips.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Attribute</th><th>Specification</th></tr></thead>
+      <tbody>
+        <tr><td>Medium</td><td>Ink line (0.3–0.8mm variation), pencil hatching for tone</td></tr>
+        <tr><td>Colour</td><td>Monochrome only. Ground (#FAF8F5) background.</td></tr>
+        <tr><td>Style</td><td>Meticulous detail — no cartoonish simplification</td></tr>
+        <tr><td>Perspective</td><td>Three-quarter angle or flat lay — never straight-on elevation</td></tr>
+        <tr><td>Background</td><td>Transparent or Ground only</td></tr>
+        <tr><td>Format</td><td>PNG, transparent, 2× minimum resolution</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-heading">Subject library</h3>
+    <table class="spec-table">
+      <thead><tr><th>Tier</th><th>Subjects</th></tr></thead>
+      <tbody>
+        <tr><td>Tier 1 — Core</td><td>Fountain pen, open notebook, desktop composition, index cards, Filofax, leather pen case</td></tr>
+        <tr><td>Tier 2 — Supporting</td><td>Bulldog clip, book stack, ink bottle, wristwatch, flat-lay, desk lamp</td></tr>
+        <tr><td>Tier 3 — Contextual</td><td>Plain mug, window with light, hands holding pen/notebook</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rules-grid">
+      <div class="rule-block rule-dont" style="grid-column:1/-1"><h4>Absolute rules — never break</h4><ul style="columns:2;gap:24px">
+        <li>No AI-generated imagery — ever</li>
+        <li>No stock photography</li>
+        <li>No 3D renders</li>
+        <li>No gradient illustrations</li>
+        <li>No flat vector illustrations</li>
+        <li>No photographs of people</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="section" id="principles">
+    <div class="section-eyebrow">Brand</div>
+    <h2 class="section-title">Principles</h2>
+    <p class="section-desc">Eight principles that govern every design decision. When in doubt, return here.</p>
+
+    <div class="principles-grid">
+      <div class="principle"><span class="principle-number">01</span><h3>Restraint earns trust</h3><p>Every element asks: does this need to be here? If the answer is not clearly yes, remove it.</p></div>
+      <div class="principle"><span class="principle-number">02</span><h3>Honest over clever</h3><p>Copy that tells the truth outperforms copy that sounds interesting. When in doubt, choose honest.</p></div>
+      <div class="principle"><span class="principle-number">03</span><h3>The tool serves the person</h3><p>If a design decision makes the product harder to use, it is the wrong decision regardless of how good it looks.</p></div>
+      <div class="principle"><span class="principle-number">04</span><h3>Craft is visible at close range</h3><p>Typography spacing, border weight, illustration line quality — details are not vanity. They signal care.</p></div>
+      <div class="principle"><span class="principle-number">05</span><h3>Specificity over abstraction</h3><p>Generic language and generic design are interchangeable. Specific language and specific design are ownable.</p></div>
+      <div class="principle"><span class="principle-number">06</span><h3>Done examples over blank templates</h3><p>A completed example is more useful than an empty framework waiting to be filled.</p></div>
+      <div class="principle"><span class="principle-number">07</span><h3>Anti-hustle, pro-calm</h3><p>No manufactured urgency. No pressure tactics. A well-organised life creates space for what actually matters.</p></div>
+      <div class="principle"><span class="principle-number">08</span><h3>One clear next step</h3><p>Every page, every section, every component has one primary action. Two competing CTAs cancel each other.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Mobile menu
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById('menuBtn');
+
+  function openMenu() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', openMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Close on nav link click (mobile)
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 768) closeMenu();
+    });
+  });
+
+  // Scroll spy
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
